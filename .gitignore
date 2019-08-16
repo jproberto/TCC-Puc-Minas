@@ -1,0 +1,8 @@
+
+workspace/
+
+sica-controle-processos/\.mvn/
+
+sica-controle-processos/mvnw\.cmd
+
+sica-controle-processos/mvnw
