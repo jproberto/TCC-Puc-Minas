@@ -12,8 +12,8 @@
 	<div class="container">
 		<h1 class="display-4">Consultar Processos</h2>
 
-		<table class="table table-hover">
-			<thead class="thead-dark">
+		<table class="table table-hover table-sm">
+			<thead class="thead-light">
 				<tr>
 					<th scope="col">Título</th>
 					<th scope="col">Descrição</th>

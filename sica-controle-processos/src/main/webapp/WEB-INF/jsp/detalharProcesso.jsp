@@ -53,6 +53,34 @@
 				</tbody>
 			</table>
 			
+			<c:if test="${!empty execucoes}">
+				<p><strong>Últimas Execuções:</strong></p>
+				<table class="table table-hover table-sm">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">Início</th>
+							<th scope="col">Fim</th>
+							<th scope="col">Situação</th>
+							<th></th>
+						</tr>
+					</thead>
+		
+					<tbody>
+						<c:forEach items="${execucoes}" var="execucao">
+							<tr>
+								<td>${localDateTimeFormat.format(execucao.inicioExecucao)}</td>
+								
+								<td>${localDateTimeFormat.format(execucao.fimExecucao)}</td>
+								
+								<td>${execucao.status.valor}</td>
+								
+								<td><a class="btn btn-outline-primary btn-sm" href="/processos/execucao/${execucao.id}">Detalhar</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</c:if>
+			
 			<div>
 				<a class="btn btn-primary" href="/processos">Voltar</a>
 				<a class="btn btn-primary" href="/processos/executar/${processo.id}" onclick="return confirm('Deseja iniciar a execução desse processo?')")>Executar Processo</a>

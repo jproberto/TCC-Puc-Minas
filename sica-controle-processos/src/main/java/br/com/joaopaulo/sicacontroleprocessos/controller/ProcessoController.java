@@ -1,22 +1,21 @@
 package br.com.joaopaulo.sicacontroleprocessos.controller;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.joaopaulo.sicacontroleprocessos.enumeration.StatusExecucao;
+import br.com.joaopaulo.sicacontroleprocessos.form.ExecucaoProcessoForm;
 import br.com.joaopaulo.sicacontroleprocessos.model.Atividade;
 import br.com.joaopaulo.sicacontroleprocessos.model.ExecucaoAtividade;
 import br.com.joaopaulo.sicacontroleprocessos.model.ExecucaoProcesso;
@@ -47,9 +46,15 @@ public class ProcessoController {
 		
 		if (processo != null) {
 			model.addAttribute("processo", processo);
+			
+			List<ExecucaoProcesso> execucoesProcesso = service.getExecucoesByProcesso(processo);
+			model.addAttribute("execucoes", execucoesProcesso);
+			
+			model.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+			
 			return "detalharProcesso";
 		} else {
-			return "consultarProcesso";
+			return consultarProcesso("", model);
 		}
 	}
 	
@@ -65,6 +70,7 @@ public class ProcessoController {
 			execucaoProcesso.setInicioExecucao(LocalDateTime.now());
 			
 			ExecucaoAtividade execucaoAtividade = new ExecucaoAtividade();
+			execucaoAtividade.setNome(execucaoProcesso.getProcesso().getAtividades().get(0).getNome());
 			execucaoAtividade.setHorarioExecucao(LocalDateTime.now());
 			execucaoProcesso.adicionarExecucaoAtividade(execucaoAtividade);
 			
@@ -74,131 +80,123 @@ public class ProcessoController {
 		
 			return "executarProcesso";
 		} else {
-			return "consultarProcesso";
+			return consultarProcesso("", model);
 		}
 	}
 	
 	@PostMapping(path = "/executar/proximaAtividade")
-	public String proximaAtividade(@RequestBody String parametros, Model model) {
-		return navegaAtividade(parametros, 1, model);
+	public String proximaAtividade(@ModelAttribute("execucaoProcessoForm") ExecucaoProcessoForm execucaoProcessoForm, Model model) {
+		return navegarAtividade(execucaoProcessoForm, 1, model);
 	}
 	
 	@PostMapping(path = "/executar/atividadeAnterior")
-	public String atividadeAnterior(@RequestBody String parametros, Model model) {
-		return navegaAtividade(parametros, -1, model);
+	public String atividadeAnterior(@ModelAttribute("execucaoProcessoForm") ExecucaoProcessoForm execucaoProcessoForm, Model model) {
+		return navegarAtividade(execucaoProcessoForm, -1, model);
 	}
 	
-	private String navegaAtividade(String parametros, int modificadorAtividade, Model model) {
-		String[] aux = parametros.split("&");
-		
-		Map<String, String> params = new HashMap<String, String>();
-		for (String p : aux) {
-			String[] a = p.split("=");
-			
-			String k = a[0];
-			String v = "";
-			if (a.length > 1) {
-				v = a[1];
-			}
-			
-			params.put(k, v);
-		}
-		
-		ExecucaoProcesso execucaoProcesso = service.getExecucaoProcessoById(params.get("idExecucaoProcesso"));
+	private String navegarAtividade(ExecucaoProcessoForm execucaoProcessoForm, int modificadorAtividade, Model model) {
+		ExecucaoProcesso execucaoProcesso = service.getExecucaoProcessoById(execucaoProcessoForm.getIdExecucaoProcesso());
 		
 		if (execucaoProcesso != null) {
-			int atividade = Integer.parseInt(params.get("atividade"));
-			int atividadeAnterior = atividade + modificadorAtividade;
-			
-			ExecucaoAtividade execucaoAtividadeAnterior;
+			int indiceAtividade = execucaoProcessoForm.getIndiceAtividade();
 			
 			List<ExecucaoAtividade> execucaoAtividades = execucaoProcesso.getExecucaoAtividades();
-			execucaoAtividadeAnterior = execucaoAtividades.get(atividadeAnterior);
-
-			execucaoAtividadeAnterior.setHorarioExecucao(LocalDateTime.now());
-			execucaoAtividadeAnterior.setObservacao(params.get("observacaoAtividade"));
-
-			ExecucaoAtividade execucaoAtividadeAtual;
+			ExecucaoAtividade execucaoAtividadeAtual = execucaoAtividades.get(indiceAtividade);
+			execucaoAtividadeAtual.setObservacao(execucaoProcessoForm.getObservacaoExecucaoAtividade());
 			
-			if (atividade > execucaoAtividades.size()) {
-				execucaoAtividadeAtual = new ExecucaoAtividade();
-				execucaoAtividadeAtual.setHorarioExecucao(LocalDateTime.now());
+			int indiceAtividadeSeguinte = indiceAtividade + modificadorAtividade;
+			ExecucaoAtividade execucaoAtividadeSeguinte;
+			if (indiceAtividadeSeguinte < execucaoAtividades.size()) {
+				execucaoAtividadeSeguinte = execucaoAtividades.get(indiceAtividadeSeguinte);
 			} else {
-				execucaoAtividadeAtual = execucaoAtividades.get(atividade);
+				execucaoAtividadeSeguinte = new ExecucaoAtividade();
+				execucaoAtividadeSeguinte.setNome(execucaoProcesso.getProcesso().getAtividades().get(indiceAtividadeSeguinte).getNome());
+				execucaoAtividadeSeguinte.setHorarioExecucao(LocalDateTime.now());
+				execucaoProcesso.adicionarExecucaoAtividade(execucaoAtividadeSeguinte);
 			}
-			
+
 			service.saveExecucaoProcesso(execucaoProcesso);
-						
-			adicionaAtributosNoModel(execucaoProcesso.getProcesso(), execucaoProcesso, execucaoAtividadeAtual, atividade, model);
+			
+			adicionaAtributosNoModel(execucaoProcesso.getProcesso(), execucaoProcesso, execucaoAtividadeSeguinte, indiceAtividadeSeguinte, model);
 			
 			return "executarProcesso";
 		} else {
-			return "consultarProcesso";
+			return consultarProcesso("", model);
 		}
 	}
 	
-	@PostMapping("/executar/{idExecucaoProcesso}/proximaAtividade")
-	public String proximaAtividadeOLD(@PathVariable("idExecucaoProcesso") String idExecucaoProcesso, @RequestParam(value = "atividade", required = true) Integer atividade, @RequestParam(value = "atividadeAnterior", required = true) Integer atividadeAnterior, @RequestParam(value = "observacaoAtividade", required = false) String observacaoAtividade, Model model) {
+	private void adicionaAtributosNoModel(Processo processo, ExecucaoProcesso execucaoProcesso, ExecucaoAtividade execucaoAtividade, int indiceAtividade, Model model) {
+		model.addAttribute("tituloProcesso", execucaoProcesso.getProcesso().getTitulo());
+		model.addAttribute("idExecucaoProcesso", execucaoProcesso.getId());
+		model.addAttribute("observacaoExecucaoAtividade",  execucaoAtividade.getObservacao() == null ? "" : execucaoAtividade.getObservacao());
+		
+		List<Atividade> atividades = processo.getAtividades();
+		model.addAttribute("atividade", atividades.get(indiceAtividade));
+
+		model.addAttribute("indiceAtividade", indiceAtividade);
+		if (indiceAtividade + 1 < atividades.size()) { 
+			model.addAttribute("indiceAtividadeProxima", indiceAtividade + 1);
+		} else {
+			model.addAttribute("indiceAtividadeProxima", -1);
+		}
+		
+		if (indiceAtividade != 0) {
+			model.addAttribute("indiceAtividadeAnterior", indiceAtividade - 1);
+		} else {
+			model.addAttribute("indiceAtividadeAnterior", -1);
+		}
+		
+		model.addAttribute("execucaoProcessoForm", new ExecucaoProcessoForm());
+	}
+	
+	@PostMapping("/executar/finalizar")
+	public String finalizarExecucao(@ModelAttribute("execucaoProcessoForm") ExecucaoProcessoForm execucaoProcessoForm, Model model) {
+		ExecucaoProcesso execucaoProcesso = service.getExecucaoProcessoById(execucaoProcessoForm.getIdExecucaoProcesso());
+		
+		if (execucaoProcesso != null) {
+			ExecucaoAtividade execucaoUltimaAtividade = execucaoProcesso.getExecucaoAtividades().get(execucaoProcessoForm.getIndiceAtividade());
+			execucaoUltimaAtividade.setObservacao(execucaoProcessoForm.getObservacaoExecucaoAtividade());
+			
+			execucaoProcesso.setStatus(StatusExecucao.CONCULUIDA_SUCESSO);
+			execucaoProcesso.setFimExecucao(LocalDateTime.now());
+			service.saveExecucaoProcesso(execucaoProcesso);
+			
+			return detalharProcesso(execucaoProcesso.getProcesso().getId(), model);
+		} else {
+			return consultarProcesso("", model);
+		}
+	}
+	
+	@PostMapping("/executar/interromper")
+	public String interromperExecucao(@ModelAttribute("execucaoProcessoForm") ExecucaoProcessoForm execucaoProcessoForm, Model model) {
+		ExecucaoProcesso execucaoProcesso = service.getExecucaoProcessoById(execucaoProcessoForm.getIdExecucaoProcesso());
+		
+		if (execucaoProcesso != null) {
+			ExecucaoAtividade execucaoUltimaAtividade = execucaoProcesso.getExecucaoAtividades().get(execucaoProcessoForm.getIndiceAtividade());
+			execucaoUltimaAtividade.setObservacao(execucaoProcessoForm.getObservacaoExecucaoAtividade());
+			
+			execucaoProcesso.setStatus(StatusExecucao.INTERROMPIDA_SEM_MOTIVO);
+			execucaoProcesso.setFimExecucao(LocalDateTime.now());
+			service.saveExecucaoProcesso(execucaoProcesso);
+			
+			return detalharProcesso(execucaoProcesso.getProcesso().getId(), model);
+		} else {
+			return consultarProcesso("", model);
+		}
+	}
+	
+	@GetMapping("/execucao/{idExecucaoProcesso}")
+	public String detalharExecucaoProcesso(@PathVariable("idExecucaoProcesso") String idExecucaoProcesso, Model model) {
 		ExecucaoProcesso execucaoProcesso = service.getExecucaoProcessoById(idExecucaoProcesso);
 		
 		if (execucaoProcesso != null) {
-			ExecucaoAtividade execucaoAtividadeAnterior;
+			model.addAttribute("execucaoProcesso", execucaoProcesso);
 			
-			List<ExecucaoAtividade> execucaoAtividades = execucaoProcesso.getExecucaoAtividades();
-			execucaoAtividadeAnterior = execucaoAtividades.get(atividadeAnterior);
-
-			execucaoAtividadeAnterior.setHorarioExecucao(LocalDateTime.now());
-			execucaoAtividadeAnterior.setObservacao(observacaoAtividade);
-
-			ExecucaoAtividade execucaoAtividadeAtual;
+			model.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 			
-			if (atividade > execucaoAtividades.size()) {
-				execucaoAtividadeAtual = new ExecucaoAtividade();
-				execucaoAtividadeAtual.setHorarioExecucao(LocalDateTime.now());
-			} else {
-				execucaoAtividadeAtual = execucaoAtividades.get(atividade);
-			}
-			
-			service.saveExecucaoProcesso(execucaoProcesso);
-						
-			adicionaAtributosNoModel(execucaoProcesso.getProcesso(), execucaoProcesso, execucaoAtividadeAtual, atividade, model);
-			
-			return "executarProcesso";
+			return "detalharExecucao";
 		} else {
-			return "consultarProcesso";
-		}
-	}
-	
-	private void adicionaAtributosNoModel(Processo processo, ExecucaoProcesso execucaoProcesso, ExecucaoAtividade execucaoAtividade, int atividade, Model model) {
-		model.addAttribute("processo", execucaoProcesso.getProcesso());
-		model.addAttribute("execucaoProcesso", execucaoProcesso);
-		model.addAttribute("execucaoAtividade",  execucaoAtividade);
-		
-		List<Atividade> atividades = processo.getAtividades();
-		model.addAttribute("atividade", atividades.get(atividade));
-		
-		if (atividade < atividades.size()) { 
-			model.addAttribute("atividadeProxima", atividade + 1);
-		} else {
-			model.addAttribute("atividadeProxima", -1);
-		}
-		
-		if (atividade != 0) {
-			model.addAttribute("atividadeAnterior", atividade - 1);
-		} else {
-			model.addAttribute("atividadeAnterior", -1);
-		}
-	}
-	
-	@GetMapping("/finalizarExecucao/{id}")
-	public String finalizarExecucao(@PathVariable("id") String id, Model model) {
-		Processo processo = service.getProcessoById(id);
-		
-		if (processo != null) {
-			model.addAttribute("processo", processo);
-			return "finalizarExecucao";
-		} else {
-			return "consultarProcesso";
+			return consultarProcesso("", model);
 		}
 	}
 }

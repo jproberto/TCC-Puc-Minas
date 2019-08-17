@@ -10,13 +10,17 @@ import br.com.joaopaulo.sicacontroleprocessos.enumeration.Periodicidade;
 import br.com.joaopaulo.sicacontroleprocessos.enumeration.Prioridade;
 import br.com.joaopaulo.sicacontroleprocessos.model.Atividade;
 import br.com.joaopaulo.sicacontroleprocessos.model.Processo;
+import br.com.joaopaulo.sicacontroleprocessos.repository.ExecucaoProcessoRepository;
 import br.com.joaopaulo.sicacontroleprocessos.repository.ProcessoRepository;
 
 @SpringBootApplication
 public class SicaControleProcessosApplication implements CommandLineRunner {
 
 	@Autowired
-	private ProcessoRepository repository;
+	private ProcessoRepository processoRepository;
+	
+	@Autowired
+	private ExecucaoProcessoRepository execucaoProcessoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SicaControleProcessosApplication.class, args);
@@ -28,7 +32,8 @@ public class SicaControleProcessosApplication implements CommandLineRunner {
 	}
 
 	private void resetaBanco() {
-		repository.deleteAll();
+		processoRepository.deleteAll();
+		execucaoProcessoRepository.deleteAll();
 		
 		Processo processo1 = new Processo();
 		processo1.setTitulo("processo 1");
@@ -60,7 +65,7 @@ public class SicaControleProcessosApplication implements CommandLineRunner {
 		a3.setPrioridade(Prioridade.MUITO_ALTA);
 		processo1.adicionarAtividade(a3);
 		
-		repository.save(processo1);
+		processoRepository.save(processo1);
 		
 		Processo processo2 = new Processo();
 		processo2.setTitulo("processo 2");
@@ -92,6 +97,6 @@ public class SicaControleProcessosApplication implements CommandLineRunner {
 		b3.setPrioridade(Prioridade.MUITO_ALTA);
 		processo2.adicionarAtividade(b3);
 		
-		repository.save(processo2);
+		processoRepository.save(processo2);
 	}
 }

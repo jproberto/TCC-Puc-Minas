@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import br.com.joaopaulo.sicacontroleprocessos.enumeration.StatusExecucao;
 
 public class ExecucaoProcesso {
+	
+	@Id
+	private String id;
 	private LocalDateTime inicioExecucao;
 	private LocalDateTime fimExecucao;
 	private StatusExecucao status;
@@ -17,6 +21,14 @@ public class ExecucaoProcesso {
 	private Processo processo;
 	private List<ExecucaoAtividade> execucaoAtividades = new ArrayList<ExecucaoAtividade>();
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public LocalDateTime getInicioExecucao() {
 		return inicioExecucao;
 	}

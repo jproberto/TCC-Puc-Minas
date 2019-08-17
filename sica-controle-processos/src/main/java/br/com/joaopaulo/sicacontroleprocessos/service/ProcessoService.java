@@ -1,10 +1,12 @@
 package br.com.joaopaulo.sicacontroleprocessos.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.joaopaulo.sicacontroleprocessos.model.Atividade;
 import br.com.joaopaulo.sicacontroleprocessos.model.ExecucaoProcesso;
 import br.com.joaopaulo.sicacontroleprocessos.model.Processo;
 import br.com.joaopaulo.sicacontroleprocessos.repository.ExecucaoProcessoRepository;
@@ -37,5 +39,18 @@ public class ProcessoService {
 
 	public ExecucaoProcesso getExecucaoProcessoById(String idExecucaoProcesso) {
 		return execucaoProcessoRepository.findById(idExecucaoProcesso).orElse(null);
+	}
+
+	public List<ExecucaoProcesso> getExecucoesByProcesso(Processo processo) {
+		List<ExecucaoProcesso> execucoes = execucaoProcessoRepository.findByProcesso(processo);
+		
+		execucoes.sort(new Comparator<ExecucaoProcesso>() {
+			@Override
+			public int compare(ExecucaoProcesso e1, ExecucaoProcesso e2) {
+				return e2.getFimExecucao().compareTo(e1.getFimExecucao());
+			}
+		});
+		
+		return execucoes;
 	}
 }

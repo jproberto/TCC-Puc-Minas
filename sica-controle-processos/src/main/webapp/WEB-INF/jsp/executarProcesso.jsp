@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE HTML>
 <html>
@@ -9,8 +10,8 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<form method="post">
-			<h1 class="display-4">Executando: ${processo.titulo}</h1>
+		<form:form method="post" modelAttribute="execucaoProcessoForm">
+			<h1 class="display-4">Executando: ${tituloProcesso}</h1>
 			
 			<hr class="my-4">
 			
@@ -28,44 +29,44 @@
 			
 			<div class="form-group">
 				<label for="observacaoExecucaoAtividade"><strong>Observação:</strong></label>
-				<textarea class="form-control" name="observacaoExecucaoAtividade">${execucaoAtividade.observacao}</textarea>
+				<textarea class="form-control" name="observacaoExecucaoAtividade">${observacaoExecucaoAtividade}</textarea>
 			</div>
 			
 			<hr class="my-4">
 							
 			<div>
-				<input type="hidden" name="idProcesso" value="${processo.id }">
 			
-				<button class="btn btn-primary" formaction="/processos/teste"></button>
+				<form:hidden path="idExecucaoProcesso" value="${idExecucaoProcesso}" />
+				<form:hidden path="indiceAtividade" value="${indiceAtividade}" />
 			
 				<c:choose>
-					<c:when test="${atividadeAnterior == -1}">
+					<c:when test="${indiceAtividadeAnterior == -1}">
 						<button class="btn btn-secondary" disabled>Anterior</button>
 					</c:when>
 					<c:otherwise>
-						<a class="btn btn-primary" href="/processos/executar/${processo.id}?atividade=${atividadeAnterior}">Anterior</a>
+						<button class="btn btn-primary" formaction="/processos/executar/atividadeAnterior">Anterior</button>
 					</c:otherwise>
 				</c:choose>
 				
 				<c:choose>
-					<c:when test="${atividadeProxima == -1}">
-						<a class="btn btn-primary" href="/processos/finalizarExecucao/${processo.id}">Finalizar Execução</a>
+					<c:when test="${indiceAtividadeProxima == -1}">
+						<button class="btn btn-primary" formaction="/processos/executar/finalizar">Finalizar Execução</button>
 					</c:when>
 					<c:otherwise>
-						<a class="btn btn-primary" href="/processos/executar/${processo.id}?atividade=${atividadeProxima}">Próxima</a>
+						<button class="btn btn-primary" formaction="/processos/executar/proximaAtividade">Próxima</button>
 					</c:otherwise>
 				</c:choose>
 				
 				<hr class="my-4">
 				
-				<a class="btn btn-danger" data-toggle="collapse" href="#collapseOcorrencia" role="button" aria-expanded="false" aria-controls="collapseOcorrencia">
+				<button class="btn btn-danger" data-toggle="collapse" data-target="#collapseOcorrencia" aria-expanded="false" aria-controls="collapseOcorrencia">
 					Informar Ocorrência
-				</a>
+				</button>
 				
 			
-				<a class="btn btn-danger" href="#" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo sem informar ocorrência?')")>Interromper Execução</a>
+				<button class="btn btn-danger" formaction="/processos/executar/interromper" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo sem informar ocorrência?')")>Interromper Execução</button>
 			</div>
-		</form>
+		</form:form>
 			
 		<form>	
 			<div class="collapse" id="collapseOcorrencia">
