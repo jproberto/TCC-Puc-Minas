@@ -1,0 +1,93 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; 
+  line-height: 30px; 
+  text-align: center;
+  background: #333333;
+  color: #FFFFFF;
+  padding: 1em;
+}
+
+.wrapper{ 
+  padding-left:0; 
+  padding-right:0; 
+}
+
+.bg-primario {
+   background-color: #239B56;
+}
+
+.navbar-brand {
+  display: inline-block;
+  font-size: 5rem;
+  line-height: inherit;
+  white-space: nowrap;
+  font-family: "Montserrat";
+}
+
+.table .thead-light th {
+  color: #495057;
+  background-color: #E9F7EF;
+  border-color: #E9F7EF;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #58D68D;
+  border-color: #58D68D;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #2ECC71;
+  border-color: #2ECC71;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(88, 214, 141, 0.5);
+}
+
+.btn-outline-primary {
+  color: #239B56;
+  border-color: #239B56;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #239B56;
+  border-color: #239B56;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(88, 214, 141, 0.5);
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-danger:focus, .btn-danger.focus {
+  box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5);
+}
+
+.espaco-footer {
+	margin-bottom: 100px;
+}

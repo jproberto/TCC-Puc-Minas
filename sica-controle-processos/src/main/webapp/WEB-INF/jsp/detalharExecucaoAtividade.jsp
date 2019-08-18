@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Detalhar Execução de Processo</title>
+	<title>Detalhar Ocorrência de Execução de Processo</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,81 +40,30 @@
 	</header>
 
 	<div class="container">
-			<h1 class="display-4">Execução: ${execucaoProcesso.processo.titulo}</h1>
+			<h1 class="display-4">${execucaoProcesso.processo.titulo} - ${execucaoAtividade.nome}</h1>
 			
 			<hr class="my-4">
 			
-			<p><strong>Início: </strong> ${localDateTimeFormat.format(execucaoProcesso.inicioExecucao)}</p>
+			<p><strong>Horário da Execução:</strong> ${localDateTimeFormat.format(execucaoAtividade.horarioExecucao)}</p>
 			
-			<p><strong>Fim: </strong> ${localDateTimeFormat.format(execucaoProcesso.fimExecucao)}</p>
+			<p><strong>Observação da Execução:</strong> ${execucaoAtividade.observacao}</p>
 			
-			<p><strong>Status: </strong> ${execucaoProcesso.status.valor}</p>
-			
-			<table class="table table-hover table-sm">
-				<thead class="thead-light">
-					<tr>
-						<th scope="col">Nome</th>
-						<th scope="col">Horário</th>
-						<th scope="col" class="d-none d-md-block">Observação</th>
-						<th></th>
-					</tr>
-				</thead>
-	
-				<tbody>
-					<c:forEach items="${execucaoProcesso.execucaoAtividades}" var="atividade" varStatus="indiceAtividade">
-						<tr>
-							<td>${atividade.nome}</td>
-							
-							<td>${localDateTimeFormat.format(atividade.horarioExecucao)}</td>
-							
-							<td class="d-none d-md-block d-lg-none">
-								<c:set var="observacao" value="${atividade.observacao}" />
-								<c:choose>
-									<c:when test="${fn:length(observacao) gt 25}">
-										${fn:substring(observacao, 0, 22)}...
-									</c:when>
-									<c:otherwise>
-										${observacao}
-									</c:otherwise>
-								</c:choose>
-							</td>
-							
-							<td class="d-none d-lg-block d-xl-none">
-								<c:set var="observacao" value="${atividade.observacao}" />
-								<c:choose>
-									<c:when test="${fn:length(observacao) gt 50}">
-										${fn:substring(observacao, 0, 48)}...
-									</c:when>
-									<c:otherwise>
-										${observacao}
-									</c:otherwise>
-								</c:choose>
-							</td>
-							
-							<td class="d-none d-xl-block">
-								<c:set var="observacao" value="${atividade.observacao}" />
-								<c:choose>
-									<c:when test="${fn:length(observacao) gt 80}">
-										${fn:substring(observacao, 0, 78)}...
-									</c:when>
-									<c:otherwise>
-										${observacao}
-									</c:otherwise>
-								</c:choose>
-							</td>
-							
-							<td>
-								<a class="btn btn-outline-primary btn-sm" href="/processos/execucao/${execucaoProcesso.id}/atividade/${indiceAtividade.count - 1}">Detalhar</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<c:if test="${ocorrencia != null}">
+				<p><strong>Observação da Ocorrência:</strong> ${ocorrencia.observacao}</p>
+				
+				<p><strong>Tipo:</strong> ${ocorrencia.tipo.valor}</p>
+				
+				<p><strong>Frequência:</strong> ${ocorrencia.recorrencia.valor}</p>
+				
+				<p><strong>Interrompeu a execução?</strong> ${ocorrencia.interrompeuExecucao ? "Sim" : "Não"}</p>
+				
+				<p><strong>Foi resolvida?</strong> ${ocorrencia.resolvida ? "Sim" : "Não"}</p>
+			</c:if>
 			
 			<hr class="my-4">
 			
 			<div>
-				<a class="btn btn-primary" href="/processos/${execucaoProcesso.processo.id}">Voltar</a>
+				<a class="btn btn-primary" href="/processos/execucao/${execucaoProcesso.id}">Voltar</a>
 			</div>
 	</div>
 	

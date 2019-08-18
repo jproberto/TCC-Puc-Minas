@@ -8,7 +8,6 @@ import br.com.joaopaulo.sicacontroleprocessos.enumeration.TipoOcorrencia;
 public class Ocorrencia {
 
 	private LocalDateTime horario;
-	private boolean emitiuAlerta;
 	private boolean interrompeuExecucao;
 	private boolean resolvida;
 	private TipoOcorrencia tipo;
@@ -21,14 +20,6 @@ public class Ocorrencia {
 
 	public void setHorario(LocalDateTime horario) {
 		this.horario = horario;
-	}
-
-	public boolean isEmitiuAlerta() {
-		return emitiuAlerta;
-	}
-
-	public void setEmitiuAlerta(boolean emitiuAlerta) {
-		this.emitiuAlerta = emitiuAlerta;
 	}
 
 	public boolean isInterrompeuExecucao() {

@@ -28,7 +28,7 @@ public class SicaControleProcessosApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String...  args) throws Exception {
-//		resetaBanco();
+		resetaBanco();
 	}
 
 	private void resetaBanco() {

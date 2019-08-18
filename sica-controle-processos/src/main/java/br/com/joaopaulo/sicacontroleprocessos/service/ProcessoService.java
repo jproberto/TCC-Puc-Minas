@@ -2,11 +2,12 @@ package br.com.joaopaulo.sicacontroleprocessos.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.joaopaulo.sicacontroleprocessos.model.Atividade;
+import br.com.joaopaulo.sicacontroleprocessos.model.ExecucaoAtividade;
 import br.com.joaopaulo.sicacontroleprocessos.model.ExecucaoProcesso;
 import br.com.joaopaulo.sicacontroleprocessos.model.Processo;
 import br.com.joaopaulo.sicacontroleprocessos.repository.ExecucaoProcessoRepository;
@@ -25,7 +26,7 @@ public class ProcessoService {
 		if (titulo == null) {
 			return processoRepository.findAll();
 		} else {		
-			return processoRepository.findByTitulo(titulo);
+			return processoRepository.findByTituloLike(titulo);
 		}
 	}
 
@@ -52,5 +53,14 @@ public class ProcessoService {
 		});
 		
 		return execucoes;
+	}
+
+	public boolean execucaoTemOcorrencia(ExecucaoProcesso execucaoProcesso) {
+		List<ExecucaoAtividade> execucoesComOcorrencia = execucaoProcesso.getExecucaoAtividades()
+																			.stream()
+																			.filter(execucaoAtividade -> execucaoAtividade.getOcorrencia() != null)
+																			.collect(Collectors.toList());
+		
+		return execucoesComOcorrencia != null && !execucoesComOcorrencia.isEmpty();
 	}
 }

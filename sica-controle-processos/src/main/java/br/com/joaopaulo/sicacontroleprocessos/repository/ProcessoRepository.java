@@ -9,5 +9,5 @@ import br.com.joaopaulo.sicacontroleprocessos.model.Processo;
 public interface ProcessoRepository extends CrudRepository<Processo, String> {
 
 	public List<Processo> findAll();
-	public List<Processo> findByTitulo(String titulo);
+	public List<Processo> findByTituloLike(String titulo);
 }
