@@ -38,10 +38,10 @@ public class SicaSegurancaComunicacaoApplication implements CommandLineRunner {
 				"Nulla tristique libero at mauris mattis, hendrerit egestas ligula ultrices. Curabitur et ante a nisl auctor hendrerit. Curabitur ut dictum turpis, tristique rutrum mauris. Nunc dictum hendrerit aliquet. Nulla congue ut dolor quis tempus. Sed varius dolor felis, quis tincidunt massa lobortis nec. Quisque placerat urna tristique urna laoreet aliquam. Vivamus id felis magna. Quisque condimentum semper sem, nec varius neque laoreet at. Nulla dolor purus, posuere ac varius in, tempor at neque. In elit elit, interdum et imperdiet in, interdum a elit. Nulla elementum, nulla a pellentesque pellentesque, lorem mi lobortis enim, at tempor nulla ex eu lorem.");
 		
 		Destinatario destinatario1 = new Destinatario();
-		destinatario1.setTipoMensagem(TipoMensagem.EMAIL);
+		destinatario1.setTipoMensagem(TipoMensagem.API);
 		destinatario1.setNomeResponsavel("Rita de Cássia");
 		destinatario1.setTelefone("1234455");
-		destinatario1.setEmail("jp_legiao@hotmail.com");
+		destinatario1.setEndpoint("http://localhost:9090/recebeAlerta");
 		
 		Destinatario destinatario2 = new Destinatario();
 		destinatario2.setTipoMensagem(TipoMensagem.EMAIL);

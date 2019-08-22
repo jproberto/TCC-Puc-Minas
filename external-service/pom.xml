@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.joaopaulo</groupId>
-	<artifactId>sica-seguranca-comunicacao</artifactId>
+	<artifactId>external-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sica-seguranca-comunicacao</name>
-	<description>Módulo de Segurança e Comunicação</description>
+	<name>external-service</name>
+	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -29,16 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 	</dependencies>
 

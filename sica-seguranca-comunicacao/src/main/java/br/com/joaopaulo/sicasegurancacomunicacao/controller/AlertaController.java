@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.joaopaulo.sicasegurancacomunicacao.model.AlertaDTO;
+import br.com.joaopaulo.sicasegurancacomunicacao.dto.AlertaDTO;
 import br.com.joaopaulo.sicasegurancacomunicacao.service.BarragemService;
 
 @RestController

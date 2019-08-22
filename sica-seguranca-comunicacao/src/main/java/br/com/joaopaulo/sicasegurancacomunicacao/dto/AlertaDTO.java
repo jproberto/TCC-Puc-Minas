@@ -1,4 +1,4 @@
-package br.com.joaopaulo.sicasegurancacomunicacao.model;
+package br.com.joaopaulo.sicasegurancacomunicacao.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.joaopaulo.sicasegurancacomunicacao.enumeration.TipoAlerta;
+import br.com.joaopaulo.sicasegurancacomunicacao.model.LocalidadeProxima;
 
 @JsonInclude(Include.NON_NULL)
 public class AlertaDTO {
