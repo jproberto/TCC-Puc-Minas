@@ -27,7 +27,7 @@ public class SicaSegurancaComunicacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String...  args) throws Exception {
-//		resetaBanco();
+		resetaBanco();
 	}
 
 	private void resetaBanco() {
@@ -75,7 +75,8 @@ public class SicaSegurancaComunicacaoApplication implements CommandLineRunner {
 		//
 		
 		Barragem barragem1 = new Barragem();
-		barragem1.setCodigo("ABC123");
+//		barragem1.setCodigo("AAA1");
+		barragem1.setCodigo("VDESD23");
 		barragem1.setNome("Barragem Barrosa");
 		barragem1.adicionaLocalidadeProxima(localidade1);
 		barragem1.adicionaLocalidadeProxima(localidade2);

@@ -43,7 +43,7 @@ public class SicaControleBarragensApplication implements CommandLineRunner {
 		s11.setNome("sensor 1");
 		s11.setCodigo("ABC11");
 		s11.adicionarLeitura(4D);
-		s11.adicionarLeitura(42D);
+		s11.adicionarLeitura(1D);
 		s11.adicionarLeitura(2D);
 		
 		Sensor s12 = new Sensor();
@@ -54,13 +54,13 @@ public class SicaControleBarragensApplication implements CommandLineRunner {
 		s12.adicionarLeitura(2D);
 		s12.adicionarLeitura(3D);
 		
-		Sensor s13 = new Sensor();
-		s13.setAtivo(true);
-		s13.setNome("sensor 3");
-		s13.setCodigo("A3G5H73F");
-		s13.adicionarLeitura(11D);
-		s13.adicionarLeitura(23D);
-		s13.adicionarLeitura(35D);
+//		Sensor s13 = new Sensor();
+//		s13.setAtivo(true);
+//		s13.setNome("sensor 3");
+//		s13.setCodigo("A3G5H73F");
+//		s13.adicionarLeitura(11D);
+//		s13.adicionarLeitura(23D);
+//		s13.adicionarLeitura(35D);
 		
 		Barragem b1 = new Barragem();
 		b1.setNome("barragem 1");
@@ -69,7 +69,7 @@ public class SicaControleBarragensApplication implements CommandLineRunner {
 		b1.setLocalizacao(l1);
 		b1.adicionarSensor(s11);
 		b1.adicionarSensor(s12);
-		b1.adicionarSensor(s13);
+//		b1.adicionarSensor(s13);
 		
 		repository.save(b1);
 		

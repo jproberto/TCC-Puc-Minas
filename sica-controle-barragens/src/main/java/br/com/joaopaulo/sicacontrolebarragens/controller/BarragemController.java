@@ -2,7 +2,6 @@ package br.com.joaopaulo.sicacontrolebarragens.controller;
 
 import java.util.List;
 
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaopaulo.sicacontrolebarragens.model.Barragem;
+import br.com.joaopaulo.sicacontrolebarragens.service.AlertaService;
 import br.com.joaopaulo.sicacontrolebarragens.service.BarragemService;
 
 @RestController
@@ -39,14 +39,14 @@ public class BarragemController {
 	
 	@GetMapping("/checarBarragem/{codigo}")
 	public ResponseEntity<Barragem> checaBarragem(@PathVariable("codigo") String codigo) {
-		ResponseEntity<Barragem> response = detalhaBarragem(codigo);
+		Barragem barragem = service.getBarragemByCodigo(codigo);
 		
-		if (!response.getStatusCode().is2xxSuccessful()) {
-			return response;
+		if (barragem == null) {
+			return ResponseEntity.notFound().build();
 		}
 		
+		service.checaBarragem(barragem);
 		
-		
-		return response;
+		return ResponseEntity.ok(barragem);
 	}
 }
