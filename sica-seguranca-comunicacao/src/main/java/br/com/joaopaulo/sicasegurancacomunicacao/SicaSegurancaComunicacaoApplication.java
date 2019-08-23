@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import br.com.joaopaulo.sicasegurancacomunicacao.enumeration.TipoLocalidade;
 import br.com.joaopaulo.sicasegurancacomunicacao.enumeration.TipoMensagem;
@@ -14,6 +15,7 @@ import br.com.joaopaulo.sicasegurancacomunicacao.model.ProcedimentoEvacuacao;
 import br.com.joaopaulo.sicasegurancacomunicacao.repository.BarragemRepository;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class SicaSegurancaComunicacaoApplication implements CommandLineRunner {
 
 	@Autowired
@@ -25,7 +27,7 @@ public class SicaSegurancaComunicacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String...  args) throws Exception {
-		resetaBanco();
+//		resetaBanco();
 	}
 
 	private void resetaBanco() {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import br.com.joaopaulo.sicacontrolebarragens.model.Barragem;
 import br.com.joaopaulo.sicacontrolebarragens.model.Localizacao;
@@ -11,6 +12,7 @@ import br.com.joaopaulo.sicacontrolebarragens.model.Sensor;
 import br.com.joaopaulo.sicacontrolebarragens.repository.BarragemRepository;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class SicaControleBarragensApplication implements CommandLineRunner {
 
 	@Autowired

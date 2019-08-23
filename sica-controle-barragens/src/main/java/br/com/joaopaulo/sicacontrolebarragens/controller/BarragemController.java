@@ -2,6 +2,7 @@ package br.com.joaopaulo.sicacontrolebarragens.controller;
 
 import java.util.List;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,5 +35,18 @@ public class BarragemController {
 		}
 		
 		return ResponseEntity.ok(barragem);
+	}
+	
+	@GetMapping("/checarBarragem/{codigo}")
+	public ResponseEntity<Barragem> checaBarragem(@PathVariable("codigo") String codigo) {
+		ResponseEntity<Barragem> response = detalhaBarragem(codigo);
+		
+		if (!response.getStatusCode().is2xxSuccessful()) {
+			return response;
+		}
+		
+		
+		
+		return response;
 	}
 }

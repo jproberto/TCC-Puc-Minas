@@ -10,15 +10,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="/controleProcessos/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/controleProcessos/css/custom.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primario">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primario sticky-top">
 			<div class="container">
-				<a class="navbar-brand" href="/">SICA</a>
+				<a class="navbar-brand" href="/controleProcessos">SICA</a>
 
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -26,9 +26,9 @@
 
 				<div class="collapse navbar-collapse wrapper" id="navbar-collapse">
 	                <ul class="navbar-nav mr-auto">
-		                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+		                <li class="nav-item"><a class="nav-link" href="/controleProcessos">Home</a></li>
 		                <li class="nav-item"><a class="nav-link disabled" href="#">Controle de Ativos</a></li>
-		             	<li class="nav-item active"><a class="nav-link" href="/processos">Controle de Processos Minerários</a></li>
+		             	<li class="nav-item active"><a class="nav-link" href="/controleProcessos/processos">Controle de Processos Minerários</a></li>
 		             	<li class="nav-item"><a class="nav-link disabled" href="#">Monitoramento de Barragens</a></li>
 		                <li class="nav-item"><a class="nav-link disabled" href="#">Segurança e Comunicação</a></li>
 		                <li class="nav-item"><a class="nav-link disabled" href="#">Inteligência do Negócio</a></li>
@@ -51,7 +51,7 @@
 				<input type="text" class="form-control" name="titulo" value="${titulo}" />
 			</div>
 			
-			<button class="btn btn-primary" formaction="/processos">Consultar</button>
+			<button class="btn btn-primary" formaction="/controleProcessos/processos">Consultar</button>
 		</form:form>
 
 		<hr class="my-4">
@@ -120,7 +120,7 @@
 							</c:choose>
 						</td>
 						
-						<td><a class="btn btn-outline-primary btn-sm" href="/processos/${processo.id}">Detalhar</a></td>
+						<td><a class="btn btn-outline-primary btn-sm" href="/controleProcessos/processos/${processo.id}">Detalhar</a></td>
 						<td><a class="btn btn-outline-primary btn-sm" href="#">Alterar</a></td>
 						<td><a class="btn btn-outline-primary btn-sm" href="#">Excluir</a></td>
 					</tr>
@@ -143,7 +143,7 @@
 		</div>
 	</footer>
 		
-	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="/controleProcessos/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/controleProcessos/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
