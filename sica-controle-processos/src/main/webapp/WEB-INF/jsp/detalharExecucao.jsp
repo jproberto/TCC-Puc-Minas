@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Detalhar Execução de Processo</title>
+	<title>Detalhar Execução de Processo Minerário</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,6 +56,7 @@
 						<th scope="col">Nome</th>
 						<th scope="col">Horário</th>
 						<th scope="col" class="d-none d-md-block">Observação</th>
+						<th scope="col">Ocorrência?</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -101,6 +102,10 @@
 										${observacao}
 									</c:otherwise>
 								</c:choose>
+							</td>
+							
+							<td>
+								${atividade.ocorrencia == null ? 'Não' : 'Sim'}
 							</td>
 							
 							<td>

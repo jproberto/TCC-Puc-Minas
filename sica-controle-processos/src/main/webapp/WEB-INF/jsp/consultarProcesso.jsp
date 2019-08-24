@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Consultar Processos</title>
+	<title>Consultar Processos Minerários</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +41,7 @@
 	</header>
 
 	<div class="container">
-		<h1 class="display-4">Consultar Processos</h1>
+		<h1 class="display-4">Consultar Processos Minerários</h1>
 
 		<hr class="my-4">
 		
@@ -131,7 +131,7 @@
 		<hr class="my-4">
 		
 		<div>
-			<a class="btn btn-primary" href="#">Novo Processo</a>
+			<a class="btn btn-primary" href="#">Novo Processo Minerário</a>
 		</div>	
 	</div>
 	

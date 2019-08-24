@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Executar Processo</title>
+	<title>Executar Processo Minerário</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +95,7 @@
 					<span class="d-block d-sm-none">Ocorrência</span><span class="d-none d-sm-block">Informar Ocorrência</span>
 				</a>
 				
-				<button class="btn btn-danger" formaction="/processos/executar/interromper" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo sem informar ocorrência?')")>
+				<button class="btn btn-danger" formaction="/controleProcessos/processos/executar/interromper" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo minerário sem informar ocorrência?')")>
 					<span class="d-block d-sm-none">Interromper</span><span class="d-none d-sm-block">Interromper Execução</span>
 				</button>
 			</div>
@@ -160,7 +160,7 @@
 					    		</button>
 					    	</c:otherwise>
 					    </c:choose>
-					    <button class="btn btn-primary" formaction="/controleProcessos/processos/executar/ocorrencia/interromper" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo?')")>
+					    <button class="btn btn-primary" formaction="/controleProcessos/processos/executar/ocorrencia/interromper" onclick="return confirm('Tem certeza que deseja interromper a execução desse processo minerário?')")>
 					    	<span class="d-block d-sm-none">Interromper</span><span class="d-none d-sm-block">Salvar e Interromper</span>
 					    </button>
 					</div>

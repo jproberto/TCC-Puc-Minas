@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Detalhar Processo</title>
+	<title>Detalhar Processo Minerário</title>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,7 +149,7 @@
 			
 			<div>
 				<a class="btn btn-primary" href="/controleProcessos/processos">Voltar</a>
-				<a class="btn btn-primary" href="/controleProcessos/processos/executar/${processo.id}" onclick="return confirm('Deseja iniciar a execução desse processo?')")>Executar Processo</a>
+				<a class="btn btn-primary" href="/controleProcessos/processos/executar/${processo.id}" onclick="return confirm('Deseja iniciar a execução desse processo minerário?')")>Executar Processo Minerário</a>
 			</div>
 	</div>
 	
