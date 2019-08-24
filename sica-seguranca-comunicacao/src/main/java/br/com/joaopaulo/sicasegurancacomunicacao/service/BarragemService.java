@@ -38,7 +38,8 @@ public class BarragemService {
 		  .append("[" + barragem.getCodigo() + "] - " + barragem.getNome() + ". \n")
 		  .append("\n")
 		  .append("A mensagem enviada foi a seguinte: \n")
-		  .append(alertaDTO.getMensagem());
+		  .append(alertaDTO.getMensagem())
+		  ;
 		
 		if (alertaDTO.getTipo().equals(TipoAlerta.EVACUACAO)) {
 			sb.append("\n \n")

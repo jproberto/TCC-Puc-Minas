@@ -42,10 +42,10 @@ public class BarragemService {
 					if (leitura > 10D) {
 						tipo = TipoAlerta.EVACUACAO;
 						sensorProblematico = sensor.getNome() + "[" + sensor.getCodigo() + "]";
-					} else if (leitura > 7D) {
+					} else if (leitura > 7D && tipo != TipoAlerta.EVACUACAO) {
 						tipo = TipoAlerta.RECOMENDACAO;
 						sensorProblematico = sensor.getNome() + "[" + sensor.getCodigo() + "]";
-					} else if (leitura > 5D) {
+					} else if (leitura > 5D && tipo == TipoAlerta.INFORMACAO) {
 						tipo = TipoAlerta.AVISO;
 						sensorProblematico = sensor.getNome() + "[" + sensor.getCodigo() + "]";
 					}
